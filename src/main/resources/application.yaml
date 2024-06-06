@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: ecommerce-app-study
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:ecommerce-db
+
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        globally_quoted_identifiers: true
+        dialect: org.hibernate.dialect.H2Dialect
+        jdbc:
+          time_zone: UTC
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    database-platform: org.hibernate.dialect.H2Dialect
