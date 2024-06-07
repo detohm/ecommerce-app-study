@@ -5,7 +5,7 @@ spring:
     console:
       enabled: true
   datasource:
-    url: jdbc:h2:mem:ecommerce-db
+    url: jdbc:h2:mem:ecommerce-db;TIME ZONE=UTC
 
   jpa:
     show-sql: true
@@ -20,3 +20,11 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+
+jwt:
+  token:
+    validity: 1_000_000
+    prefix: Bearer
+  signing:
+    key: some-signing-key-should-be-long-enough
