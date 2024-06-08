@@ -25,14 +25,15 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if(token == null || token.startsWith(jwtTokenProvider.getTokenPrefix())){
+        String headerToken = request.getHeader(HttpHeaders.AUTHORIZATION);
+        if(headerToken == null || !headerToken.startsWith(jwtTokenProvider.getTokenPrefix())){
             filterChain.doFilter(request, response);
             return;
         }
 
         String username;
         try {
+            String token = headerToken.split(" ")[1].trim();
             username = jwtTokenProvider.validateAndGetUsername(token);
         } catch (Exception e){
             filterChain.doFilter(request, response);

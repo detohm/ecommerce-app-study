@@ -11,13 +11,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    @Autowired
-    private UserRepository userRepository;
 
-    @PostMapping("/seed")
-    // Temporal method to seed user
-    void seed(){
-        User user = new User();
-        userRepository.save(user);
-    }
 }

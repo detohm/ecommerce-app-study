@@ -10,11 +10,13 @@ import dev.attaphong.ecommerce_app_study.repository.ProductRepository;
 import dev.attaphong.ecommerce_app_study.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class CartService {
     @Autowired
     private CartRepository cartRepository;
@@ -48,6 +50,7 @@ public class CartService {
         if(cart.getItems().size() >= 3){
             throw new RuntimeException("max cart size");
         }
+
 
         cart.getItems().add(new OrderItem(product.get(),orderItemDTO.getQuantity()));
         cartRepository.save(cart);

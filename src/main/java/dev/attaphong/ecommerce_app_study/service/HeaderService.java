@@ -1,10 +1,14 @@
 package dev.attaphong.ecommerce_app_study.service;
 
+import lombok.Getter;
 import org.springframework.http.HttpHeaders;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 public class HeaderService {
     private static volatile HeaderService instance;
 
+    @Getter
     private final HttpHeaders globalHeaders;
 
     private HeaderService(){
@@ -21,9 +25,5 @@ public class HeaderService {
             }
         }
         return instance;
-    }
-
-    public HttpHeaders getGlobalHeaders(){
-        return globalHeaders;
     }
 }

@@ -4,8 +4,10 @@ import dev.attaphong.ecommerce_app_study.dto.ProductDTO;
 import dev.attaphong.ecommerce_app_study.dto.ResponseDTO;
 import dev.attaphong.ecommerce_app_study.model.Inventory;
 import dev.attaphong.ecommerce_app_study.model.Product;
+import dev.attaphong.ecommerce_app_study.model.Role;
 import dev.attaphong.ecommerce_app_study.service.HeaderService;
 import dev.attaphong.ecommerce_app_study.service.ProductService;
+import jakarta.annotation.security.RolesAllowed;
 import org.apache.coyote.Response;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +28,14 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/list")
+    @RolesAllowed({Role.Fields.OPERATION,Role.Fields.ADMIN})
     ResponseEntity<List<ProductDTO>> getProducts(){
         List<Product> products = productService.getProducts();
         return new ResponseEntity<>(convertToDTO(products), HttpStatus.OK);
     }
 
     @PostMapping("/create")
+    @RolesAllowed({Role.Fields.OPERATION,Role.Fields.ADMIN})
     ResponseEntity<?> create(@RequestBody ProductDTO productDTO){
         Product product = convertFromDTO(productDTO);
         productService.create(product);
@@ -39,6 +43,7 @@ public class ProductController {
     }
 
     @PutMapping("/update")
+    @RolesAllowed({Role.Fields.OPERATION,Role.Fields.ADMIN})
     ResponseEntity<?> update(@RequestBody ProductDTO productDTO){
         if(productDTO.getId() == null){
             throw new RuntimeException("invalid id");
@@ -54,6 +59,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @RolesAllowed({Role.Fields.OPERATION,Role.Fields.ADMIN})
     ResponseEntity<ResponseDTO> delete(@PathVariable("id") long productID){
         productService.delete(productID);
         return ResponseEntity.ok().headers(HeaderService.getInstance().getGlobalHeaders()).build();
