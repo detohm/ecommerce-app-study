@@ -2,6 +2,7 @@ package dev.attaphong.ecommerce_app_study.service;
 
 import dev.attaphong.ecommerce_app_study.model.Product;
 import dev.attaphong.ecommerce_app_study.repository.ProductRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +25,7 @@ public class ProductService {
     public void update(Product product){
         Optional<Product> optProduct = productRepository.findById(product.getId());
         if(optProduct.isEmpty()){
-            throw new RuntimeException("invalid id");
+            throw new EntityNotFoundException("id:" + product.getId());
         }
         Product savedProduct = optProduct.get();
 
